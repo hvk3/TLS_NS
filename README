@@ -1,0 +1,18 @@
+Steps for compiling the programs:
+
+i) Go to the appropriate directory, and run 'make'.
+ii) Run './server' to start the CA, which is responsible for exchanging ports.
+iii) Run './client <IP>' where IP is the IP address of the server initiated in step (ii). If the same system has the server as well as the client,
+use 127.0.0.1 as the IP.
+
+The program supports multiuser communication, and can be extended for mutual authentication by adding a few lines of code.
+
+Assumptions : 
+i) The server has to be kept in check, so as to sign the requests as and when they arrive.
+Handled by adding the -batch flag to the system call.
+ii) Not more than 10000 connections are simultaneously active.
+
+Basic error handling has been done; however the server and clients seem to crash if socket ports aren't available.
+
+Do not remove the CA's certificate or key files (cacert.pem and cakey.pem in ca_server/). If removed, regenerate them by calling : 
+'openssl req -x509 -config openssl-ca.cnf -newkey rsa:4096 -sha256 -nodes -out cacert.pem -outform PEM' in ca_server.
